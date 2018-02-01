@@ -1,0 +1,2 @@
+# grit
+readable git
