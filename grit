@@ -1,0 +1,42 @@
+#!/bin/bash
+
+# Reset
+Color_Off='\033[0m'       # Text Reset
+
+# Regular Colors
+Red='\033[0;31m'          # Red
+Green='\033[0;32m'        # Green
+Yellow='\033[0;33m'       # Yellow
+Blue='\033[0;34m'         # Blue
+Purple='\033[0;35m'       # Purple
+Cyan='\033[0;36m'         # Cyan
+
+if [ "$1" == "pull" ]; then
+    if [ "$2" == "" ]; then
+        git pull origin develop --no-edit
+    else
+        git pull origin $2 --no-edit
+fi
+elif [ "$1" == "push" ]; then
+    if [ "$2" == "" ]; then
+        git push origin HEAD
+    else
+        git push origin $2
+fi
+elif [ "$1" == "-h" ]; then
+    echo "usage: '. grit (push|pull)* branch*"
+else
+    git branch
+    if [[ $(git diff --stat --cached) ]]; then
+        echo -e "${Green}Staged files:${Color_Off}"
+        git diff --stat=$COLUMNS --cached --color | sed \$d
+    fi
+    if [[ $(git diff --stat) ]]; then
+        echo -e "${Red}Not staged files:${Color_Off}"
+        git diff --stat=$COLUMNS --color | sed \$d
+    fi
+    if [[ $(git ls-files --others --exclude-standard) ]]; then
+        echo -e "${Blue}Untracked files:${Color_Off}"
+        git ls-files --others --exclude-standard | sed  's/^/ /'
+    fi
+fi
