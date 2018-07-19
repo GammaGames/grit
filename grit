@@ -24,7 +24,7 @@ elif [ "$1" == "push" ]; then
         git push origin $2
     fi
 elif [ "$1" == "-h" ]; then
-    echo "usage: '. grit (push|pull)* branch*"
+    echo "usage: '. grit (push|pull)* [branch]"
 elif [ -z "$1" ]; then
     git branch
     if [[ $(git diff --stat --cached) ]]; then
