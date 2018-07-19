@@ -16,13 +16,13 @@ if [ "$1" == "pull" ]; then
         git pull origin develop --no-edit
     else
         git pull origin $2 --no-edit
-fi
+    fi
 elif [ "$1" == "push" ]; then
     if [ -z "$2" ]; then
         git push origin HEAD
     else
         git push origin $2
-fi
+    fi
 elif [ "$1" == "-h" ]; then
     echo "usage: '. grit (push|pull)* branch*"
 elif [ -z "$1" ]; then
@@ -39,4 +39,6 @@ elif [ -z "$1" ]; then
         echo -e "${Blue}Untracked files:${Color_Off}"
         git ls-files --others --exclude-standard | sed  's/^/ /'
     fi
+else
+    git $@
 fi
