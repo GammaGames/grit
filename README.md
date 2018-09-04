@@ -14,3 +14,4 @@ Commands:
 * `grit` - list current branches and current modified files
 * `grit pull [branch]` - pull branch (or develop of none provided)
 * `grit push [branch]` - push to branch (or HEAD if non provided)
+* `git release` - pull master branch

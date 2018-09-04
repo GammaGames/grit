@@ -23,8 +23,15 @@ elif [ "$1" == "push" ]; then
     else
         git push origin $2
     fi
+elif [ "$1" == "release" ]; then
+    git pull origin master
 elif [ "$1" == "-h" ]; then
-    echo "usage: '. grit (push|pull)* [branch]"
+    echo "readable git"
+    echo "=== COMMANDS ========="
+    echo "grit               : list current branches and current modified files"
+    echo "grit pull [branch] : pull branch (or develop of none provided)"
+    echo "grit push [branch] : push to branch (or HEAD if non provided)"
+    echo "git release        : pull master branch"
 elif [ -z "$1" ]; then
     git branch
     if [[ $(git diff --stat --cached) ]]; then
