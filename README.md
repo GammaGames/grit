@@ -13,5 +13,8 @@ Commands:
 
 * `grit` - list current branches and current modified files
 * `grit pull [branch]` - pull branch (or develop of none provided)
-* `grit push [branch]` - push to branch (or HEAD if non provided)
-* `git release` - pull master branch
+* `grit push [branch]` - push to branch (or HEAD if none provided)
+* `grit release` - pull master branch
+* `grit commit [message]` - commit staged files with message (opens editor if none provided)
+* `grit uncommit` - un-commit the last commit without losing work
+* `grit amend` - amend the staged files to the last commit

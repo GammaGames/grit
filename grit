@@ -25,13 +25,26 @@ elif [ "$1" == "push" ]; then
     fi
 elif [ "$1" == "release" ]; then
     git pull origin master
+elif [ "$1" == "commit" ]; then
+    if [ -z "$2" ]; then
+        git commit
+    else
+        git commit -m "$2"
+    fi
+elif [ "$1" == "uncommit" ]; then
+    git reset --soft HEAD^
+elif [ "$1" == "amend" ]; then
+    git commit --amend --no-edit
 elif [ "$1" == "-h" ]; then
     echo "readable git"
     echo "=== COMMANDS ========="
-    echo "grit               : list current branches and current modified files"
-    echo "grit pull [branch] : pull branch (or develop of none provided)"
-    echo "grit push [branch] : push to branch (or HEAD if non provided)"
-    echo "grit release        : pull master branch"
+    echo "grit                  : list current branches and current modified files"
+    echo "grit pull [branch]    : pull branch (or develop of none provided)"
+    echo "grit push [branch]    : push to branch (or HEAD if non provided)"
+    echo "grit release          : pull master branch"
+    echo "grit commit [message] : commit staged files with message (opens editor if none provided)"
+    echo "grit uncommit         : un-commit the last commit without losing work"
+    echo "grit release          : amend the staged files to the last commit"
 elif [ -z "$1" ]; then
     git branch
     if [[ $(git diff --stat --cached) ]]; then
