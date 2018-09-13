@@ -44,7 +44,7 @@ elif [ "$1" == "-h" ]; then
     echo "grit release          : pull master branch"
     echo "grit commit [message] : commit staged files with message (opens editor if none provided)"
     echo "grit uncommit         : un-commit the last commit without losing work"
-    echo "grit release          : amend the staged files to the last commit"
+    echo "grit amend            : amend the staged files to the last commit"
 elif [ -z "$1" ]; then
     git branch
     if [[ $(git diff --stat --cached) ]]; then
