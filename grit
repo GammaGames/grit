@@ -26,7 +26,11 @@ elif [ "$1" == "push" ]; then
 elif [ "$1" == "update" ]; then
     git pull origin master
 elif [ "$1" == "diff" ]; then
-    git diff --ignore-space-at-eol
+    if [ -z "$2" ]; then
+        git diff --ignore-space-at-eol
+    else
+        git diff --ignore-space-at-eol $2
+    fi
 elif [ "$1" == "commit" ]; then
     if [ -z "$2" ]; then
         git commit
