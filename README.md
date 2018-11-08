@@ -20,3 +20,5 @@ alias grit='. ~/Documents/grit/grit'
 * `grit cad [path] [message]`   add path and commit with message (opens editor if none provided)"
 * `grit uncommit`               un-commit the last commit without losing work
 * `grit amend`                  amend the staged files to the last commit
+* `grit sup`                    for each submodule pull the latest master branch
+* `grit suc [command]`          for each submodule run a command
