@@ -21,4 +21,5 @@ alias grit='. ~/Documents/grit/grit'
 * `grit uncommit`               un-commit the last commit without losing work
 * `grit amend`                  amend the staged files to the last commit
 * `grit sup`                    for each submodule pull the latest master branch
+* `grit sut`                    for each submodule pull the latest tag
 * `grit suc [command]`          for each submodule run a command

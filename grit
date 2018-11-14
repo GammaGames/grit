@@ -50,6 +50,8 @@ elif [ "$1" == "amend" ]; then
     git commit --amend --no-edit
 elif [ "$1" == "sup" ]; then
     git submodule foreach git pull origin master
+elif [ "$1" == "sut" ]; then
+    git submodule foreach 'git fetch origin; git checkout $(git describe --tags `git rev-list --tags --max-count=1`);'
 elif [ "$1" == "suc" ]; then
     git submodule foreach $2
 elif [ "$1" == "-h" ]; then
@@ -65,6 +67,7 @@ elif [ "$1" == "-h" ]; then
     echo "grit uncommit             un-commit the last commit without losing work"
     echo "grit amend                amend the staged files to the last commit"
     echo "grit sup                  for each submodule pull the latest master branch"
+    echo "grit sut                  for each submodule pull the latest tag"
     echo "grit suc                  for each submodule run a command"
 elif [ -z "$1" ]; then
     git branch
