@@ -23,6 +23,23 @@ elif [ "$1" == "push" ]; then
     else
         git push origin $2
     fi
+elif [ "$1" == "force" ]; then
+    read -p "What's the magic word? " password
+    if [ "$password" == "please" ]; then
+        if [ -z "$2" ]; then
+            git push origin HEAD --force
+        else
+            git push origin $2 --force
+        fi
+    # Cast a spell
+    elif [ "$password" == "avada kedavra" ]; then
+        echo -e "-${Green}~~~*${Color_Off}"
+    # Give some treasure
+    elif [ "$password" == "open sesame" ]; then
+        echo -e "${Yellow}o${Color_Off}"
+    else
+        echo "Ah ah ah, you didn't say the magic word!"
+    fi
 elif [ "$1" == "update" ]; then
     git pull origin master
 elif [ "$1" == "diff" ]; then
@@ -60,6 +77,7 @@ elif [ "$1" == "-h" ]; then
     echo "grit                      list current branches and current modified files"
     echo "grit pull [branch]        pull branch (or develop of none provided)"
     echo "grit push [branch]        push to branch (or HEAD if non provided)"
+    echo "grit force [branch]       push to branch (or HEAD) if asked nicely"
     echo "grit update               pull master branch"
     echo "grit diff                 show diff, ignoring whitespace changes at end of lines"
     echo "grit commit [message]     commit staged files with message (opens editor if none provided)"
