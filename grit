@@ -23,6 +23,16 @@ elif [ "$1" == "push" ]; then
     else
         git push origin $2
     fi
+elif [ "$1" == "force" ]; then
+    if [ "$2" == "--please" ]; then
+        if [ -z "$3" ]; then
+            git push origin HEAD --force
+        else
+            git push origin $3 --force
+        fi
+    else
+        echo "What's the magic word?"
+    fi
 elif [ "$1" == "update" ]; then
     git pull origin master
 elif [ "$1" == "diff" ]; then
@@ -55,17 +65,18 @@ elif [ "$1" == "suc" ]; then
 elif [ "$1" == "-h" ]; then
     echo "readable git"
     echo "=== COMMANDS ========="
-    echo "grit                      list current branches and current modified files"
-    echo "grit pull [branch]        pull branch (or develop of none provided)"
-    echo "grit push [branch]        push to branch (or HEAD if non provided)"
-    echo "grit update               pull master branch"
-    echo "grit diff                 show diff, ignoring whitespace changes at end of lines"
-    echo "grit commit [message]     commit staged files with message (opens editor if none provided)"
-    echo "grit cad [path] [message] add path and commit with message (opens editor if none provided)"
-    echo "grit uncommit             un-commit the last commit without losing work"
-    echo "grit amend                amend the staged files to the last commit"
-    echo "grit sup                  for each submodule pull the latest master branch"
-    echo "grit suc                  for each submodule run a command"
+    echo "grit                         list current branches and current modified files"
+    echo "grit pull [branch]           pull branch (or develop of none provided)"
+    echo "grit push [branch]           push to branch (or HEAD if non provided)"
+    echo "grit force --please [branch] force push to branch (or HEAD) if asked nicely"
+    echo "grit update                  pull master branch"
+    echo "grit diff                    show diff, ignoring whitespace changes at end of lines"
+    echo "grit commit [message]        commit staged files with message (opens editor if none provided)"
+    echo "grit cad [path] [message]    add path and commit with message (opens editor if none provided)"
+    echo "grit uncommit                un-commit the last commit without losing work"
+    echo "grit amend                   amend the staged files to the last commit"
+    echo "grit sup                     for each submodule pull the latest master branch"
+    echo "grit suc                     for each submodule run a command"
 elif [ -z "$1" ]; then
     git branch
     if [[ $(git diff --stat --cached) ]]; then
