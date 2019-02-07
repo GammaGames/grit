@@ -44,9 +44,9 @@ elif [ "$1" == "update" ]; then
     git pull origin master
 elif [ "$1" == "diff" ]; then
     if [ -z "$2" ]; then
-        git diff --ignore-space-at-eol
+        git diff -w
     else
-        git diff --ignore-space-at-eol $2
+        git diff -w $2
     fi
 elif [ "$1" == "commit" ]; then
     if [ -z "$2" ]; then
@@ -79,7 +79,7 @@ elif [ "$1" == "-h" ]; then
     echo "grit push [branch]        push to branch (or HEAD if non provided)"
     echo "grit force [branch]       push to branch (or HEAD) if asked nicely"
     echo "grit update               pull master branch"
-    echo "grit diff                 show diff, ignoring whitespace changes at end of lines"
+    echo "grit diff                 show diff, ignoring whitespace changes"
     echo "grit commit [message]     commit staged files with message (opens editor if none provided)"
     echo "grit cad [path] [message] add path and commit with message (opens editor if none provided)"
     echo "grit uncommit             un-commit the last commit without losing work"

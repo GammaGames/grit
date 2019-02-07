@@ -16,7 +16,7 @@ alias grit='. ~/Documents/grit/grit'
 * `grit push [branch]`        push to branch (or HEAD if none provided)
 * `grit force [branch]`       force push to branch (or HEAD) if asked nicely
 * `grit update`               pull master branch
-* `grit diff [path]`          show diff, ignoring whitespace changes at end of lines
+* `grit diff [path]`          show diff, ignoring whitespace changes
 * `grit commit [message]`     commit staged files with message (opens editor if none provided)
 * `grit cad [path] [message]` add path and commit with message (opens editor if none provided)"
 * `grit uncommit`             un-commit the last commit without losing work
