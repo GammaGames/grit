@@ -44,9 +44,9 @@ elif [ "$1" == "update" ]; then
     git pull origin master
 elif [ "$1" == "diff" ]; then
     if [ -z "$2" ]; then
-        git diff -w
+        git diff -w --ignore-blank-lines
     else
-        git diff -w $2
+        git diff -w --ignore-blank-lines $2
     fi
 elif [ "$1" == "commit" ]; then
     if [ -z "$2" ]; then
