@@ -48,6 +48,11 @@ elif [ "$1" == "diff" ]; then
     else
         git diff -w --ignore-blank-lines $2
     fi
+elif [ "$1" == "init" ]; then
+    git init
+    if [ -n "$2" ]; then
+        git remote add origin "$2"
+    fi
 elif [ "$1" == "commit" ]; then
     if [ -z "$2" ]; then
         git commit
@@ -80,6 +85,7 @@ elif [ "$1" == "-h" ]; then
     echo "grit force [branch]       push to branch (or HEAD) if asked nicely"
     echo "grit update               pull master branch"
     echo "grit diff                 show diff, ignoring whitespace changes"
+    echo "grit init [origin]        Initialize a new repo (with the given origin if provided)"
     echo "grit commit [message]     commit staged files with message (opens editor if none provided)"
     echo "grit cad [path] [message] add path and commit with message (opens editor if none provided)"
     echo "grit uncommit             un-commit the last commit without losing work"

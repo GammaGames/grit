@@ -17,8 +17,9 @@ alias grit='. ~/Documents/grit/grit'
 * `grit force [branch]`       force push to branch (or HEAD) if asked nicely
 * `grit update`               pull master branch
 * `grit diff [path]`          show diff, ignoring whitespace changes
+* `grit init [origin]`        Initialize a new repo (with the given origin if provided)
 * `grit commit [message]`     commit staged files with message (opens editor if none provided)
-* `grit cad [path] [message]` add path and commit with message (opens editor if none provided)"
+* `grit cad [path] [message]` add path and commit with message (opens editor if none provided)
 * `grit uncommit`             un-commit the last commit without losing work
 * `grit amend`                amend the staged files to the last commit
 * `grit sup`                  for each submodule pull the latest master branch
