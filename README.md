@@ -9,6 +9,13 @@ alias grit='. ~/Documents/grit/grit'
 
 ![preview](/preview.png)
 
+Using grit you can create and push the first commit with the following:
+```sh
+grit init https://github.com/username/repo.git
+grit cad . "Initial commit"
+grit push
+```
+
 ### Commands:
 
 * `grit`                      list current branches and current modified files
