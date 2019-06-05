@@ -11,19 +11,23 @@ Blue='\033[0;34m'         # Blue
 Purple='\033[0;35m'       # Purple
 Cyan='\033[0;36m'         # Cyan
 
-if [ "$1" == "pull" ]; then
+pull() {
     if [ -z "$2" ]; then
         git pull origin develop --no-edit
     else
         git pull origin $2 --no-edit
     fi
-elif [ "$1" == "push" ]; then
+}
+
+push() {
     if [ -z "$2" ]; then
         git push origin HEAD
     else
         git push origin $2
     fi
-elif [ "$1" == "force" ]; then
+}
+
+force() {
     read -p "What's the magic word? " password
     if [ "$password" == "please" ]; then
         if [ -z "$2" ]; then
@@ -40,45 +44,67 @@ elif [ "$1" == "force" ]; then
     else
         echo "Ah ah ah, you didn't say the magic word!"
     fi
-elif [ "$1" == "update" ]; then
+}
+
+update() {
     git pull origin master
-elif [ "$1" == "diff" ]; then
+}
+
+diff() {
     if [ -z "$2" ]; then
         git diff -w --ignore-blank-lines
     else
         git diff -w --ignore-blank-lines $2
     fi
-elif [ "$1" == "init" ]; then
+}
+
+init() {
     git init
     if [ -n "$2" ]; then
         git remote add origin "$2"
     fi
-elif [ "$1" == "commit" ]; then
+}
+
+commit() {
     if [ -z "$2" ]; then
         git commit
     else
         git commit -m "$2"
     fi
-elif [ "$1" == "cad" ]; then
+}
+
+cad() {
     git add $2
     if [ -z "$3" ]; then
         git commit
     else
         git commit -m "$3"
     fi
-elif [ "$1" == "uncommit" ]; then
+}
+
+uncommit() {
     git reset --soft HEAD^
-elif [ "$1" == "amend" ]; then
+}
+
+amend() {
     git commit --amend --no-edit
-elif [ "$1" == "sup" ]; then
+}
+
+sup() {
     git submodule foreach git pull origin master
-elif [ "$1" == "sut" ]; then
+}
+
+sut() {
     git submodule foreach 'git fetch origin; git checkout $(git describe --tags `git rev-list --tags --max-count=1`);'
-elif [ "$1" == "suc" ]; then
+}
+
+suc() {
     git submodule foreach $2
-elif [ "$1" == "-h" ]; then
+}
+
+help() {
     echo "readable git"
-    echo "=== COMMANDS ========="
+    echo "==== COMMANDS ========="
     echo "grit                      list current branches and current modified files"
     echo "grit pull [branch]        pull branch (or develop of none provided)"
     echo "grit push [branch]        push to branch (or HEAD if non provided)"
@@ -93,7 +119,9 @@ elif [ "$1" == "-h" ]; then
     echo "grit sup                  for each submodule pull the latest master branch"
     echo "grit sut                  for each submodule pull the latest tag"
     echo "grit suc                  for each submodule run a command"
-elif [ -z "$1" ]; then
+}
+
+status() {
     git branch
     if [[ $(git diff --stat --cached) ]]; then
         echo -e "${Green}Staged files:${Color_Off}"
@@ -107,6 +135,14 @@ elif [ -z "$1" ]; then
         echo -e "${Blue}Untracked files:${Color_Off}"
         git ls-files --others --exclude-standard | sed  's/^/ /'
     fi
+}
+
+if [ "$(type -t $1)" == "function" ]; then
+    $1 $@
+elif [ "$1" == "-h" ]; then
+    help
+elif [ -z "$1" ]; then
+    status
 else
     git $@
 fi
