@@ -11,6 +11,23 @@ Blue='\033[0;34m'         # Blue
 Purple='\033[0;35m'       # Purple
 Cyan='\033[0;36m'         # Cyan
 
+AUTOCOMPLETE_TEXT="_grit() {
+    local cur prev opts
+    COMPREPLY=()
+    cur=\"\${COMP_WORDS[COMP_CWORD]}\"
+    prev=\"\${COMP_WORDS[COMP_CWORD-1]}\"
+    opts=\"pull push force update diff init commit cad uncommit amend sup sut suc\"
+    if [ \$COMP_CWORD == 1 ]; then
+        COMPREPLY=( \$(compgen -W \"\${opts}\" -- \${cur}) )
+    else
+        COMPREPLY=( \$(compgen -o default -- \"\${COMP_WORDS[COMP_CWORD]}\") )
+    fi
+    return 0
+}
+complete -o filenames -F _grit grit"
+AUTOCOMPLETE_FILE="/etc/bash_completion.d/grit"
+NO_AUTOCOMPLETE_FILE="./.noauto"
+
 pull() {
     if [ -z "$2" ]; then
         git pull origin develop --no-edit
@@ -136,6 +153,25 @@ status() {
         git ls-files --others --exclude-standard | sed  's/^/ /'
     fi
 }
+
+shortcuts() {
+    sudo bash -c "> $AUTOCOMPLETE_FILE"
+    sudo bash -c "echo '$AUTOCOMPLETE_TEXT' >> $AUTOCOMPLETE_FILE"
+}
+
+if [[ ! -f $NO_AUTOCOMPLETE_FILE && ! -f $AUTOCOMPLETE_FILE ]]; then
+    read -p "Create shortcuts file? (Y/N)" create
+
+    case $create in
+    [yY])
+        shortcuts
+        ;;
+    [nN])
+        touch $NO_AUTOCOMPLETE_FILE
+        echo "To create a shortcuts file use the command 'grit shortcuts'"
+        ;;
+    esac
+fi
 
 if [ "$(type -t $1)" == "function" ]; then
     $1 $@
