@@ -174,11 +174,11 @@ if [[ ! -f $NO_AUTOCOMPLETE_FILE && ! -f $AUTOCOMPLETE_FILE ]]; then
 fi
 
 if [ "$(type -t $1)" == "function" ]; then
-    $1 $@
+    $1 "$@"
 elif [ "$1" == "-h" ]; then
     help
 elif [ -z "$1" ]; then
     status
 else
-    git $@
+    git "$@"
 fi
