@@ -11,46 +11,31 @@ Blue='\033[0;34m'         # Blue
 Purple='\033[0;35m'       # Purple
 Cyan='\033[0;36m'         # Cyan
 
-AUTOCOMPLETE_TEXT="_grit() {
-    local cur prev opts
-    COMPREPLY=()
-    cur=\"\${COMP_WORDS[COMP_CWORD]}\"
-    prev=\"\${COMP_WORDS[COMP_CWORD-1]}\"
-    opts=\"pull push force update diff init commit cad uncommit amend sup sut suc\"
-    if [ \$COMP_CWORD == 1 ]; then
-        COMPREPLY=( \$(compgen -W \"\${opts}\" -- \${cur}) )
-    else
-        COMPREPLY=( \$(compgen -o default -- \"\${COMP_WORDS[COMP_CWORD]}\") )
-    fi
-    return 0
-}
-complete -o filenames -F _grit grit"
-AUTOCOMPLETE_FILE="/etc/bash_completion.d/grit"
-NO_AUTOCOMPLETE_FILE="./.noauto"
+DIR=$(dirname $(cd "$(dirname "$BASH_SOURCE")"; pwd))/grit
 
-pull() {
-    if [ -z "$2" ]; then
+grit.pull() {
+    if [ -z "$1" ]; then
         git pull origin develop --no-edit
     else
-        git pull origin $2 --no-edit
+        git pull origin $1 --no-edit
     fi
 }
 
-push() {
-    if [ -z "$2" ]; then
+grit.push() {
+    if [ -z "$1" ]; then
         git push origin HEAD
     else
-        git push origin $2
+        git push origin $1
     fi
 }
 
-force() {
+grit.force() {
     read -p "What's the magic word? " password
     if [ "$password" == "please" ]; then
-        if [ -z "$2" ]; then
+        if [ -z "$1" ]; then
             git push origin HEAD --force
         else
-            git push origin $2 --force
+            git push origin $1 --force
         fi
     # Cast a spell
     elif [ "$password" == "avada kedavra" ]; then
@@ -63,26 +48,35 @@ force() {
     fi
 }
 
-update() {
+grit.update() {
     git pull origin master
 }
 
-diff() {
-    if [ -z "$2" ]; then
+grit.diff() {
+    if [ -z "$1" ]; then
         git diff -w --ignore-blank-lines
     else
-        git diff -w --ignore-blank-lines $2
+        git diff -w --ignore-blank-lines $1
     fi
 }
 
-init() {
+grit.init() {
     git init
-    if [ -n "$2" ]; then
-        git remote add origin "$2"
+    if [ -n "$1" ]; then
+        git remote add origin "$1"
     fi
 }
 
-commit() {
+grit.commit() {
+    if [ -z "$1" ]; then
+        git commit
+    else
+        git commit -m "$1"
+    fi
+}
+
+grit.cad() {
+    git add $1
     if [ -z "$2" ]; then
         git commit
     else
@@ -90,36 +84,27 @@ commit() {
     fi
 }
 
-cad() {
-    git add $2
-    if [ -z "$3" ]; then
-        git commit
-    else
-        git commit -m "$3"
-    fi
-}
-
-uncommit() {
+grit.uncommit() {
     git reset --soft HEAD^
 }
 
-amend() {
+grit.amend() {
     git commit --amend --no-edit
 }
 
-sup() {
+grit.sup() {
     git submodule foreach git pull origin master
 }
 
-sut() {
+grit.sut() {
     git submodule foreach 'git fetch origin; git checkout $(git describe --tags `git rev-list --tags --max-count=1`);'
 }
 
-suc() {
-    git submodule foreach $2
+grit.suc() {
+    git submodule foreach $1
 }
 
-help() {
+grit.help() {
     echo "readable git"
     echo "==== COMMANDS ========="
     echo "grit                      list current branches and current modified files"
@@ -138,7 +123,7 @@ help() {
     echo "grit suc                  for each submodule run a command"
 }
 
-status() {
+grit.status() {
     git branch
     if [[ $(git diff --stat --cached) ]]; then
         echo -e "${Green}Staged files:${Color_Off}"
@@ -154,31 +139,29 @@ status() {
     fi
 }
 
-shortcuts() {
-    sudo bash -c "> $AUTOCOMPLETE_FILE"
-    sudo bash -c "echo '$AUTOCOMPLETE_TEXT' >> $AUTOCOMPLETE_FILE"
+grit.shortcuts() {
+    sudo bash -c "ln -sf $DIR/shortcuts /etc/bash_completion.d/grit"
 }
 
-if [[ ! -f $NO_AUTOCOMPLETE_FILE && ! -f $AUTOCOMPLETE_FILE ]]; then
+if [[ ! -f "$DIR/.noauto" && ! -f "/etc/bash_completion.d/grit" ]]; then
     read -p "Create shortcuts file? (Y/N)" create
-
     case $create in
     [yY])
-        shortcuts
+        grit.shortcuts
         ;;
     [nN])
-        touch $NO_AUTOCOMPLETE_FILE
+        touch "$DIR/.noauto"
         echo "To create a shortcuts file use the command 'grit shortcuts'"
         ;;
     esac
 fi
 
-if [ "$(type -t $1)" == "function" ]; then
-    $1 "$@"
+if [ "$(type -t grit.$1)" == "function" ]; then
+    "grit.$@"
 elif [ "$1" == "-h" ]; then
-    help
+    grit.help
 elif [ -z "$1" ]; then
-    status
+    grit.status
 else
     git "$@"
 fi
