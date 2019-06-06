@@ -11,46 +11,32 @@ Blue='\033[0;34m'         # Blue
 Purple='\033[0;35m'       # Purple
 Cyan='\033[0;36m'         # Cyan
 
-AUTOCOMPLETE_TEXT="_grit() {
-    local cur prev opts
-    COMPREPLY=()
-    cur=\"\${COMP_WORDS[COMP_CWORD]}\"
-    prev=\"\${COMP_WORDS[COMP_CWORD-1]}\"
-    opts=\"pull push force update diff init commit cad uncommit amend sup sut suc\"
-    if [ \$COMP_CWORD == 1 ]; then
-        COMPREPLY=( \$(compgen -W \"\${opts}\" -- \${cur}) )
-    else
-        COMPREPLY=( \$(compgen -o default -- \"\${COMP_WORDS[COMP_CWORD]}\") )
-    fi
-    return 0
-}
-complete -o filenames -F _grit grit"
 AUTOCOMPLETE_FILE="/etc/bash_completion.d/grit"
 NO_AUTOCOMPLETE_FILE="./.noauto"
 
 grit.pull() {
-    if [ -z "$2" ]; then
+    if [ -z "$1" ]; then
         git pull origin develop --no-edit
     else
-        git pull origin $2 --no-edit
+        git pull origin $1 --no-edit
     fi
 }
 
 grit.push() {
-    if [ -z "$2" ]; then
+    if [ -z "$1" ]; then
         git push origin HEAD
     else
-        git push origin $2
+        git push origin $1
     fi
 }
 
 grit.force() {
     read -p "What's the magic word? " password
     if [ "$password" == "please" ]; then
-        if [ -z "$2" ]; then
+        if [ -z "$1" ]; then
             git push origin HEAD --force
         else
-            git push origin $2 --force
+            git push origin $1 --force
         fi
     # Cast a spell
     elif [ "$password" == "avada kedavra" ]; then
@@ -68,34 +54,34 @@ grit.update() {
 }
 
 grit.diff() {
-    if [ -z "$2" ]; then
+    if [ -z "$1" ]; then
         git diff -w --ignore-blank-lines
     else
-        git diff -w --ignore-blank-lines $2
+        git diff -w --ignore-blank-lines $1
     fi
 }
 
 grit.init() {
     git init
-    if [ -n "$2" ]; then
-        git remote add origin "$2"
+    if [ -n "$1" ]; then
+        git remote add origin "$1"
     fi
 }
 
 grit.commit() {
-    if [ -z "$2" ]; then
+    if [ -z "$1" ]; then
         git commit
     else
-        git commit -m "$2"
+        git commit -m "$1"
     fi
 }
 
 grit.cad() {
-    git add $2
-    if [ -z "$3" ]; then
+    git add $1
+    if [ -z "$2" ]; then
         git commit
     else
-        git commit -m "$3"
+        git commit -m "$2"
     fi
 }
 
@@ -116,7 +102,7 @@ grit.sut() {
 }
 
 grit.suc() {
-    git submodule foreach $2
+    git submodule foreach $1
 }
 
 grit.help() {
@@ -155,8 +141,7 @@ grit.status() {
 }
 
 grit.shortcuts() {
-    sudo bash -c "> $AUTOCOMPLETE_FILE"
-    sudo bash -c "echo '$AUTOCOMPLETE_TEXT' >> $AUTOCOMPLETE_FILE"
+    sudo bash -c "ln -sf $(dirname $(cd "$(dirname "$BASH_SOURCE")"; pwd))/grit/shortcuts $AUTOCOMPLETE_FILE"
 }
 
 if [[ ! -f $NO_AUTOCOMPLETE_FILE && ! -f $AUTOCOMPLETE_FILE ]]; then
@@ -174,11 +159,11 @@ if [[ ! -f $NO_AUTOCOMPLETE_FILE && ! -f $AUTOCOMPLETE_FILE ]]; then
 fi
 
 if [ "$(type -t grit.$1)" == "function" ]; then
-    grit.$1 "$@"
+    "grit.$@"
 elif [ "$1" == "-h" ]; then
-    help
+    grit.help
 elif [ -z "$1" ]; then
-    status
+    grit.status
 else
     git "$@"
 fi
