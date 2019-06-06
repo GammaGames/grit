@@ -139,19 +139,19 @@ grit.status() {
     fi
 }
 
-grit.shortcuts() {
-    sudo bash -c "ln -sf $DIR/shortcuts /etc/bash_completion.d/grit"
+grit.autocomplete() {
+    sudo bash -c "ln -sf $DIR/autocomplete /etc/bash_completion.d/grit"
 }
 
-if [[ ! -f "$DIR/.noauto" && ! -f "/etc/bash_completion.d/grit" ]]; then
-    read -p "Create shortcuts file? (Y/N)" create
+if [[ ! -f "$DIR/.noauto" && -f "$DIR/autocomplete" && ! -f "/etc/bash_completion.d/grit" ]]; then
+    read -p "Add autocomplete for commands (Creates file in /etc/bash_completion.d, requires sudo)? (Y/N)" create
     case $create in
     [yY])
-        grit.shortcuts
+        grit.autocomplete
         ;;
     [nN])
         touch "$DIR/.noauto"
-        echo "To create a shortcuts file use the command 'grit shortcuts'"
+        echo "To add autocomplete for commands later use the command 'grit autocomplete'"
         ;;
     esac
 fi

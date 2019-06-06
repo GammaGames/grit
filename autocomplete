@@ -3,12 +3,12 @@ _grit() {
     COMPREPLY=()
     cur="${COMP_WORDS[COMP_CWORD]}"
     prev="${COMP_WORDS[COMP_CWORD-1]}"
-    opts="pull push force update diff init commit cad uncommit amend sup sut suc"
+    opts="pull push force update diff init commit cad uncommit amend sup sut suc autocomplete"
     if [ $COMP_CWORD == 1 ]; then
         COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
     else
-        COMPREPLY=( $(compgen -o default -- "${COMP_WORDS[COMP_CWORD]}") )
+        COMPREPLY=()
     fi
     return 0
 }
-complete -o filenames -F _grit grit
+complete -o default -F _grit grit
