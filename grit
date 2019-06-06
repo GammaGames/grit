@@ -28,7 +28,7 @@ complete -o filenames -F _grit grit"
 AUTOCOMPLETE_FILE="/etc/bash_completion.d/grit"
 NO_AUTOCOMPLETE_FILE="./.noauto"
 
-pull() {
+grit.pull() {
     if [ -z "$2" ]; then
         git pull origin develop --no-edit
     else
@@ -36,7 +36,7 @@ pull() {
     fi
 }
 
-push() {
+grit.push() {
     if [ -z "$2" ]; then
         git push origin HEAD
     else
@@ -44,7 +44,7 @@ push() {
     fi
 }
 
-force() {
+grit.force() {
     read -p "What's the magic word? " password
     if [ "$password" == "please" ]; then
         if [ -z "$2" ]; then
@@ -63,11 +63,11 @@ force() {
     fi
 }
 
-update() {
+grit.update() {
     git pull origin master
 }
 
-diff() {
+grit.diff() {
     if [ -z "$2" ]; then
         git diff -w --ignore-blank-lines
     else
@@ -75,14 +75,14 @@ diff() {
     fi
 }
 
-init() {
+grit.init() {
     git init
     if [ -n "$2" ]; then
         git remote add origin "$2"
     fi
 }
 
-commit() {
+grit.commit() {
     if [ -z "$2" ]; then
         git commit
     else
@@ -90,7 +90,7 @@ commit() {
     fi
 }
 
-cad() {
+grit.cad() {
     git add $2
     if [ -z "$3" ]; then
         git commit
@@ -99,27 +99,27 @@ cad() {
     fi
 }
 
-uncommit() {
+grit.uncommit() {
     git reset --soft HEAD^
 }
 
-amend() {
+grit.amend() {
     git commit --amend --no-edit
 }
 
-sup() {
+grit.sup() {
     git submodule foreach git pull origin master
 }
 
-sut() {
+grit.sut() {
     git submodule foreach 'git fetch origin; git checkout $(git describe --tags `git rev-list --tags --max-count=1`);'
 }
 
-suc() {
+grit.suc() {
     git submodule foreach $2
 }
 
-help() {
+grit.help() {
     echo "readable git"
     echo "==== COMMANDS ========="
     echo "grit                      list current branches and current modified files"
@@ -138,7 +138,7 @@ help() {
     echo "grit suc                  for each submodule run a command"
 }
 
-status() {
+grit.status() {
     git branch
     if [[ $(git diff --stat --cached) ]]; then
         echo -e "${Green}Staged files:${Color_Off}"
@@ -154,7 +154,7 @@ status() {
     fi
 }
 
-shortcuts() {
+grit.shortcuts() {
     sudo bash -c "> $AUTOCOMPLETE_FILE"
     sudo bash -c "echo '$AUTOCOMPLETE_TEXT' >> $AUTOCOMPLETE_FILE"
 }
@@ -173,8 +173,8 @@ if [[ ! -f $NO_AUTOCOMPLETE_FILE && ! -f $AUTOCOMPLETE_FILE ]]; then
     esac
 fi
 
-if [ "$(type -t $1)" == "function" ]; then
-    $1 "$@"
+if [ "$(type -t grit.$1)" == "function" ]; then
+    grit.$1 "$@"
 elif [ "$1" == "-h" ]; then
     help
 elif [ -z "$1" ]; then
