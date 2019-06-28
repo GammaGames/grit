@@ -84,6 +84,15 @@ grit.cad() {
     fi
 }
 
+grit.cal() {
+    git add "$(history | grep "diff" | tail -1 | head -1 | awk '{print $4}')"
+    if [ -z "$1" ]; then
+        git commit
+    else
+        git commit -m "$1"
+    fi
+}
+
 grit.uncommit() {
     git reset --soft HEAD^
 }
@@ -115,7 +124,8 @@ grit.help() {
     echo "grit diff                 show diff, ignoring whitespace changes"
     echo "grit init [origin]        Initialize a new repo (with the given origin if provided)"
     echo "grit commit [message]     commit staged files with message (opens editor if none provided)"
-    echo "grit cad [path] [message] add path and commit with message (opens editor if none provided)"
+    echo "grit cad <path> [message] add path and commit with message (opens editor if none provided)"
+    echo "grit cal [message]        add last diff'd file commit with message (opens editor if none provided)"
     echo "grit uncommit             un-commit the last commit without losing work"
     echo "grit amend                amend the staged files to the last commit"
     echo "grit sup                  for each submodule pull the latest master branch"
