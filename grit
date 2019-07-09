@@ -52,11 +52,19 @@ grit.update() {
     git pull origin master
 }
 
-grit.diff() {
+grit.dif() {
     if [ -z "$1" ]; then
         git diff -w --ignore-blank-lines --color-words=.
     else
         git diff -w --ignore-blank-lines --color-words=. $1
+    fi
+}
+
+grit.diff() {
+    if [ -z "$1" ]; then
+        git diff -w --ignore-blank-lines
+    else
+        git diff -w --ignore-blank-lines $1
     fi
 }
 
@@ -121,6 +129,7 @@ grit.help() {
     echo "grit push [branch]        push to branch (or HEAD if blank)"
     echo "grit force [branch]       push to branch (or HEAD) if asked nicely"
     echo "grit update               pull master branch"
+    echo "grit dif                  show diff of words, ignoring whitespace changes"
     echo "grit diff                 show diff, ignoring whitespace changes"
     echo "grit init [origin]        Initialize a new repo (with the given origin if provided)"
     echo "grit commit [message]     commit staged files with message (opens editor if blank)"
