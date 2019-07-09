@@ -23,6 +23,7 @@ grit push
 * `grit push [branch]`        push to branch (or HEAD if blank)
 * `grit force [branch]`       force push to branch (or HEAD) if asked nicely
 * `grit update`               pull master branch
+* `grit dif [path]`           show diff of words, ignoring whitespace changes
 * `grit diff [path]`          show diff, ignoring whitespace changes
 * `grit init [origin]`        Initialize a new repo (with the given origin if entered)
 * `grit commit [message]`     commit staged files with message (opens editor if blank)
