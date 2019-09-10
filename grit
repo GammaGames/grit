@@ -93,7 +93,7 @@ grit.cad() {
 }
 
 grit.cal() {
-    git add "$(history | grep "diff" | tail -1 | head -1 | awk '{print $4}')"
+    git add "$(history | grep "dif" | tail -1 | head -1 | awk '{print $4}')"
     if [ -z "$1" ]; then
         git commit
     else
