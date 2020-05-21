@@ -52,6 +52,14 @@ grit.update() {
     git pull origin master
 }
 
+grit.bronch() {
+    if [ -z "$2" ]; then
+        git checkout origin/develop -b $1
+    else
+        git checkout origin/$1 -b $2
+    fi
+}
+
 grit.dif() {
     if [ -z "$1" ]; then
         git diff -w --ignore-blank-lines --color-words=.
@@ -124,22 +132,23 @@ grit.suc() {
 grit.help() {
     echo "readable git"
     echo "==== COMMANDS ========="
-    echo "grit                      list current branches and current modified files"
-    echo "grit pull [branch]        pull branch (or develop of blank)"
-    echo "grit push [branch]        push to branch (or HEAD if blank)"
-    echo "grit force [branch]       push to branch (or HEAD) if asked nicely"
-    echo "grit update               pull master branch"
-    echo "grit dif                  show diff of words, ignoring whitespace changes"
-    echo "grit diff                 show diff, ignoring whitespace changes"
-    echo "grit init [origin]        Initialize a new repo (with the given origin if provided)"
-    echo "grit commit [message]     commit staged files with message (opens editor if blank)"
-    echo "grit cad <path> [message] add path and commit with message (opens editor if blank)"
-    echo "grit cal [message]        add last diff'd file commit with message (opens editor if blank)"
-    echo "grit uncommit             un-commit the last commit without losing work"
-    echo "grit amend                amend the staged files to the last commit"
-    echo "grit sup                  for each submodule pull the latest master branch"
-    echo "grit sut                  for each submodule pull the latest tag"
-    echo "grit suc                  for each submodule run a command"
+    echo "grit                           list current branches and current modified files"
+    echo "grit pull [branch]             pull branch (or develop if blank)"
+    echo "grit push [branch]             push to branch (or HEAD if blank)"
+    echo "grit force [branch]            push to branch (or HEAD) if asked nicely"
+    echo "grit update                    pull master branch"
+    echo "grit bronch [source] <branch>  create a new branch from origin/source (develop if blank)"
+    echo "grit dif                       show diff of words, ignoring whitespace changes"
+    echo "grit diff                      show diff, ignoring whitespace changes"
+    echo "grit init [origin]             initialize a new repo (with the given origin if provided)"
+    echo "grit commit [message]          commit staged files with message (opens editor if blank)"
+    echo "grit cad <path> [message]      add path and commit with message (opens editor if blank)"
+    echo "grit cal [message]             add last diff'd file commit with message (opens editor if blank)"
+    echo "grit uncommit                  un-commit the last commit without losing work"
+    echo "grit amend                     amend the staged files to the last commit"
+    echo "grit sup                       for each submodule pull the latest master branch"
+    echo "grit sut                       for each submodule pull the latest tag"
+    echo "grit suc                       for each submodule run a command"
 }
 
 grit.status() {
