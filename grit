@@ -52,6 +52,20 @@ grit.update() {
     git pull origin master --no-edit
 }
 
+grit.refresh() {
+    if [ -z "$1" ]; then
+        git pull origin develop --no-edit
+    else
+        git pull origin $1 --no-edit
+    fi
+
+    if [ -z "$2" ]; then
+        git push origin HEAD
+    else
+        git push origin $2
+    fi
+}
+
 grit.bronch() {
     if [ -z "$2" ]; then
         git checkout origin/develop -b $1
@@ -133,14 +147,15 @@ grit.help() {
     echo "readable git"
     echo "==== COMMANDS ========="
     echo "grit                           list current branches and current modified files"
-    echo "grit pull [branch]             pull branch (or develop if blank)"
-    echo "grit push [branch]             push to branch (or HEAD if blank)"
-    echo "grit force [branch]            push to branch (or HEAD) if asked nicely"
+    echo "grit pull [branch]             pull branch (develop if blank)"
+    echo "grit push [branch]             push to branch (HEAD if blank)"
+    echo "grit force [branch]            push to branch (HEAD) if asked nicely"
     echo "grit update                    pull master branch"
+    echo "grit refresh [source] [target] pull source branch (develop if blank) and push to target (HEAD if blank)"
     echo "grit bronch [source] <branch>  create a new branch from origin/source (develop if blank)"
     echo "grit dif                       show diff of words, ignoring whitespace changes"
     echo "grit diff                      show diff, ignoring whitespace changes"
-    echo "grit init [origin]             initialize a new repo (with the given origin if provided)"
+    echo "grit init [origin]             initialize a new repo (with origin if provided)"
     echo "grit commit [message]          commit staged files with message (opens editor if blank)"
     echo "grit cad <path> [message]      add path and commit with message (opens editor if blank)"
     echo "grit cal [message]             add last diff'd file commit with message (opens editor if blank)"

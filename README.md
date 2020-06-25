@@ -23,22 +23,23 @@ grit bronch master new-feature
 
 ### Commands
 
-| Command                         | Description                                                      |
-|---------------------------------|------------------------------------------------------------------|
-| `grit`                          | list current branches and current modified files                 |
-| `grit pull [branch]`            | pull branch (or develop if blank)                                |
-| `grit push [branch]`            | push to branch (or HEAD if blank)                                |
-| `grit force [branch]`           | push to branch (or HEAD) if asked nicely                         |
-| `grit update`                   | pull master branch                                               |
-| `grit bronch [source] <branch>` | create a new branch from origin/source (develop if blank)        |
-| `grit dif`                      | show diff of words, ignoring whitespace changes                  |
-| `grit diff`                     | show diff, ignoring whitespace changes                           |
-| `grit init [origin]`            | initialize a new repo (with the given origin if provided)        |
-| `grit commit [message]`         | commit staged files with message (opens editor if blank)         |
-| `grit cad <path> [message]`     | add path and commit with message (opens editor if blank)         |
-| `grit cal [message]`            | add last diff'd file commit with message (opens editor if blank) |
-| `grit uncommit`                 | un-commit the last commit without losing work                    |
-| `grit amend`                    | amend the staged files to the last commit                        |
-| `grit sup`                      | for each submodule pull the latest master branch                 |
-| `grit sut`                      | for each submodule pull the latest tag                           |
-| `grit suc`                      | for each submodule run a command                                 |
+| Command                          | Description                                                              |
+|----------------------------------|--------------------------------------------------------------------------|
+| `grit`                           | list current branches and current modified files                         |
+| `grit pull [branch]`             | pull branch (develop if blank)                                           |
+| `grit push [branch]`             | push to branch (HEAD if blank)                                           |
+| `grit force [branch]`            | push to branch (HEAD) if asked nicely                                    |
+| `grit update`                    | pull master branch                                                       |
+| `grit refresh [source] [target`] | pull source branch (develop if blank) and push to target (HEAD if blank) |
+| `grit bronch [source] <branch>`  | create a new branch from origin/source (develop if blank)                |
+| `grit dif`                       | show diff of words, ignoring whitespace changes                          |
+| `grit diff`                      | show diff, ignoring whitespace changes                                   |
+| `grit init [origin]`             | initialize a new repo (with origin if provided)                          |
+| `grit commit [message]`          | commit staged files with message (opens editor if blank)                 |
+| `grit cad <path> [message]`      | add path and commit with message (opens editor if blank)                 |
+| `grit cal [message]`             | add last diff'd file commit with message (opens editor if blank)         |
+| `grit uncommit`                  | un-commit the last commit without losing work                            |
+| `grit amend`                     | amend the staged files to the last commit                                |
+| `grit sup`                       | for each submodule pull the latest master branch                         |
+| `grit sut`                       | for each submodule pull the latest tag                                   |
+| `grit suc`                       | for each submodule run a command                                         |
