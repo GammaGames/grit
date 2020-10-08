@@ -26,6 +26,7 @@ grit bronch master new-feature
 | Command                          | Description                                                              |
 |----------------------------------|--------------------------------------------------------------------------|
 | `grit`                           | list current branches and current modified files                         |
+| `grit help [command]`                           | show function body (or general help text if blank)                         |
 | `grit pull [branch]`             | pull branch (develop if blank)                                           |
 | `grit push [branch]`             | push to branch (HEAD if blank)                                           |
 | `grit force [branch]`            | push to branch (HEAD) if asked nicely                                    |
