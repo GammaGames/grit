@@ -26,21 +26,21 @@ grit bronch main new-feature
 | Command | Description |
 |----------------------------------|--------------------------------------------------------------------------|
 | `grit` | list current branches and current modified files |
-| `grit help [command]` | show function body (or general help text if blank) |
-| `grit pull [branch]` | pull branch (develop if blank) |
-| `grit push [branch]` | push to branch (HEAD if blank) |
-| `grit force [branch]` | push to branch (HEAD) if asked nicely |
+| `grit help COMMAND` | show function body (or general help text if blank) |
+| `grit pull [BRANCH]` | pull branch (develop if blank) |
+| `grit push [BRANCH]` | push to branch (HEAD if blank) |
+| `grit force [BRANCH]` | push to branch (HEAD) if asked nicely |
 | `grit update` | pull main branch |
-| `grit refresh [source] [target`] | pull source branch (develop if blank) and push to target (HEAD if blank) |
-| `grit bronch [source] <branch>` | create a new branch from origin/source (develop if blank) |
+| `grit refresh [SOURCE] [TARGET]` | pull source branch (develop if blank) and push to target (HEAD if blank) |
+| `grit bronch [SOURCE] TARGET` | create a new branch from source (develop if blank) |
 | `grit dif` | show diff of words, ignoring whitespace changes |
 | `grit diff` | show diff, ignoring whitespace changes |
-| `grit init [origin]` | initialize a new repo (with origin if provided) |
-| `grit commit [message]` | commit staged files with message (opens editor if blank) |
-| `grit cad <path> [message]` | add path and commit with message (opens editor if blank) |
-| `grit cal [message]` | add last diff'd file commit with message (opens editor if blank) |
+| `grit init [ORIGIN]` | initialize a new repo (with origin if provided) |
+| `grit commit [MESSAGE]` | commit staged files with message (opens editor if blank) |
+| `grit cad PATH [MESSAGE]` | add path and commit with message (opens editor if blank) |
+| `grit cal [MESSAGE]` | add last diff'd file commit with message (opens editor if blank) |
 | `grit uncommit` | un-commit the last commit without losing work |
 | `grit amend` | amend the staged files to the last commit |
-| `grit sup` | for each submodule pull the latest master branch |
-| `grit sut` | for each submodule pull the latest tag |
+| `grit sad NAME ORIGIN [BRANCH] [PREFIX]` | add subtree to repo with name, use branch (main if blank) and use subfolder (NAME if blank) |
+| `grit sup NAME [BRANCH] [PREFIX]` | update subtree by name, branch (main if blank), and subfolder (NAME if blank) |
 | `grit suc [command]` | for each submodule run a command |

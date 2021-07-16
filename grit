@@ -132,16 +132,28 @@ grit.amend() {
     git commit --amend --no-edit
 }
 
+grit.sad() {
+    git remote add -f $1 $2
+
+    if [ -z "$3" ]; then
+        git subtree add --prefix $1 $1 main --squash
+    elif [ -z "$4" ]; then
+        git subtree add --prefix $1 $1 $3 --squash
+    else
+        git subtree add $1 $3 --prefix $4 --squash
+    fi
+}
+
 grit.sup() {
-    git submodule foreach git pull origin main
-}
+    git fetch $1
 
-grit.sut() {
-    git submodule foreach 'git fetch origin; git checkout $(git describe --tags `git rev-list --tags --max-count=1`);'
-}
-
-grit.suc() {
-    git submodule foreach $1
+    if [ -z "$2" ]; then
+        git subtree pull --prefix $1 $1 main --squash
+    elif [ -z "$3" ]; then
+        git subtree pull --prefix $1 $1 $2 --squash
+    else
+        git subtree pull $1 $2 --prefix $3 --squash
+    fi
 }
 
 grit.help() {
@@ -150,25 +162,26 @@ grit.help() {
     else
         echo "readable git"
         echo "==== COMMANDS ========="
-        echo "grit                           list current branches and current modified files"
-        echo "grit help [command]            show function body (or general help text if blank)"
-        echo "grit pull [branch]             pull branch (develop if blank)"
-        echo "grit push [branch]             push to branch (HEAD if blank)"
-        echo "grit force [branch]            push to branch (HEAD) if asked nicely"
-        echo "grit update                    pull main branch"
-        echo "grit refresh [source] [target] pull source branch (develop if blank) and push to target (HEAD if blank)"
-        echo "grit bronch [source] <branch>  create a new branch from origin/source (develop if blank)"
-        echo "grit dif                       show diff of words, ignoring whitespace changes"
-        echo "grit diff                      show diff, ignoring whitespace changes"
-        echo "grit init [origin]             initialize a new repo (with origin if provided)"
-        echo "grit commit [message]          commit staged files with message (opens editor if blank)"
-        echo "grit cad <path> [message]      add path and commit with message (opens editor if blank)"
-        echo "grit cal [message]             add last diff'd file commit with message (opens editor if blank)"
-        echo "grit uncommit                  un-commit the last commit without losing work"
-        echo "grit amend                     amend the staged files to the last commit"
-        echo "grit sup                       for each submodule pull the latest main branch"
-        echo "grit sut                       for each submodule pull the latest tag"
-        echo "grit suc [command]             for each submodule run a command"
+        echo "grit                            list current branches and current modified files"
+        echo "grit help COMMAND               show function body (or general help text if blank)"
+        echo "grit pull [BRANCH]              pull branch (develop if blank)"
+        echo "grit push [BRANCH]              push to branch (HEAD if blank)"
+        echo "grit force [BRANCH]             push to branch (HEAD) if asked nicely"
+        echo "grit update                     pull main branch"
+        echo "grit refresh [SOURCE] [TARGET]  pull source branch (develop if blank) and push to target (HEAD if blank)"
+        echo "grit bronch [SOURCE] TARGET     create a new branch from source (develop if blank)"
+        echo "grit dif                        show diff of words, ignoring whitespace changes"
+        echo "grit diff                       show diff, ignoring whitespace changes"
+        echo "grit init [ORIGIN]              initialize a new repo (with origin if provided)"
+        echo "grit commit [MESSAGE]           commit staged files with message (opens editor if blank)"
+        echo "grit cad PATH [MESSAGE]         add path and commit with message (opens editor if blank)"
+        echo "grit cal [MESSAGE]              add last diff'd file commit with message (opens editor if blank)"
+        echo "grit uncommit                   un-commit the last commit without losing work"
+        echo "grit amend                      amend the staged files to the last commit"
+        echo "grit sad NAME ORIGIN            add subtree to repo with name"
+        echo "         [BRANCH] [PREFIX]        use branch (main if blank) and use subfolder (NAME if blank)"
+        echo "grit sup NAME [BRANCH] [PREFIX] update subtree by name, branch (main if blank), and subfolder (NAME if blank)"
+        echo "grit suc [command]              for each submodule run a command"
     fi
 }
 
