@@ -3,7 +3,7 @@ _grit() {
     COMPREPLY=()
     cur="${COMP_WORDS[COMP_CWORD]}"
     prev="${COMP_WORDS[COMP_CWORD-1]}"
-    opts="pull push force update refresh bronch dif diff init commit cad cal uncommit amend sup sut suc"
+    opts="pull push force update refresh bronch dif diff init commit cad cal uncommit amend sad sup"
     if [ $COMP_CWORD == 1 ]; then
         COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
     else
