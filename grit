@@ -148,11 +148,11 @@ grit.sup() {
     git fetch $1
 
     if [ -z "$2" ]; then
-        git subtree pull --prefix $1 $1 main --squash
+        git subtree pull --prefix $1 $1 main --squash --no-edit
     elif [ -z "$3" ]; then
-        git subtree pull --prefix $1 $1 $2 --squash
+        git subtree pull --prefix $1 $1 $2 --squash --no-edit
     else
-        git subtree pull $1 $2 --prefix $3 --squash
+        git subtree pull $1 $2 --prefix $3 --squash --no-edit
     fi
 }
 
