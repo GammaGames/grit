@@ -41,6 +41,6 @@ grit bronch main new-feature
 | `grit cal [MESSAGE]` | add last diff'd file commit with message (opens editor if blank) |
 | `grit uncommit` | un-commit the last commit without losing work |
 | `grit amend` | amend the staged files to the last commit |
-| `grit sad NAME ORIGIN [BRANCH] [PREFIX]` | add subtree to repo with name, use branch (main if blank) and use subfolder (NAME if blank) |
-| `grit sup NAME [BRANCH] [PREFIX]` | update subtree by name, branch (main if blank), and subfolder (NAME if blank) |
+| `grit sad NAME ORIGIN [BRANCH] [PREFIX]` | add subtree to repo with name, use branch (HEAD if blank) and use subfolder (NAME if blank) |
+| `grit sup NAME [BRANCH] [PREFIX]` | update subtree by name, branch (HEAD if blank), and subfolder (NAME if blank) |
 | `grit suc [command]` | for each submodule run a command |

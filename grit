@@ -136,7 +136,7 @@ grit.sad() {
     git remote add -f $1 $2
 
     if [ -z "$3" ]; then
-        git subtree add --prefix $1 $1 main --squash
+        git subtree add --prefix $1 $1 HEAD --squash
     elif [ -z "$4" ]; then
         git subtree add --prefix $1 $1 $3 --squash
     else
@@ -148,7 +148,7 @@ grit.sup() {
     git fetch $1
 
     if [ -z "$2" ]; then
-        git subtree pull --prefix $1 $1 main --squash
+        git subtree pull --prefix $1 $1 HEAD --squash
     elif [ -z "$3" ]; then
         git subtree pull --prefix $1 $1 $2 --squash
     else
@@ -179,8 +179,8 @@ grit.help() {
         echo "grit uncommit                   un-commit the last commit without losing work"
         echo "grit amend                      amend the staged files to the last commit"
         echo "grit sad NAME ORIGIN            add subtree to repo with name"
-        echo "         [BRANCH] [PREFIX]        use branch (main if blank) and use subfolder (NAME if blank)"
-        echo "grit sup NAME [BRANCH] [PREFIX] update subtree by name, branch (main if blank), and subfolder (NAME if blank)"
+        echo "         [BRANCH] [PREFIX]        use branch (HEAD if blank) and use subfolder (NAME if blank)"
+        echo "grit sup NAME [BRANCH] [PREFIX] update subtree by name, branch (HEAD if blank), and subfolder (NAME if blank)"
         echo "grit suc [command]              for each submodule run a command"
     fi
 }
