@@ -76,9 +76,9 @@ grit.bronch() {
 
 grit.dif() {
     if [ -z "$1" ]; then
-        git diff -w --ignore-blank-lines --color-words=.
+        git diff -w --ignore-blank-lines --color-words='\w+|.'
     else
-        git diff -w --ignore-blank-lines --color-words=. $1
+        git diff -w --ignore-blank-lines --color-words='\w+|.' $1
     fi
 }
 
