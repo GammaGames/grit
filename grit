@@ -186,18 +186,21 @@ grit.help() {
 }
 
 grit.status() {
-    git branch
-    if [[ $(git diff --stat --cached) ]]; then
-        echo -e "${Green}Staged files:${Color_Off}"
-        git diff --stat=$COLUMNS --cached --color | sed \$d
-    fi
-    if [[ $(git diff --stat) ]]; then
-        echo -e "${Red}Not staged files:${Color_Off}"
-        git diff --stat=$COLUMNS --color | sed \$d
-    fi
-    if [[ $(git ls-files --others --exclude-standard) ]]; then
-        echo -e "${Blue}Untracked files:${Color_Off}"
-        git ls-files --others --exclude-standard | sed  's/^/ /'
+    if git branch ; then
+        if [[ $(git diff --stat --cached) ]]; then
+            echo -e "${Green}Staged files:${Color_Off}"
+            git diff --stat=$COLUMNS --cached --color | sed \$d
+        fi
+        if [[ $(git diff --stat) ]]; then
+            echo -e "${Red}Not staged files:${Color_Off}"
+            git diff --stat=$COLUMNS --color | sed \$d
+        fi
+        if [[ $(git ls-files --others --exclude-standard) ]]; then
+            echo -e "${Blue}Untracked files:${Color_Off}"
+            git ls-files --others --exclude-standard | sed  's/^/ /'
+        fi
+    else
+        false
     fi
 }
 
