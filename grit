@@ -13,7 +13,7 @@ Cyan='\033[0;36m'         # Cyan
 
 DIR=$(dirname $(cd "$(dirname "$BASH_SOURCE")"; pwd))/grit
 
-grit.pull() {
+function grit.pull() {
     if [ -z "$1" ]; then
         git pull origin develop --no-edit
     else
@@ -21,7 +21,7 @@ grit.pull() {
     fi
 }
 
-grit.push() {
+function grit.push() {
     if [ -z "$1" ]; then
         git push origin HEAD
     else
@@ -29,7 +29,7 @@ grit.push() {
     fi
 }
 
-grit.force() {
+function grit.force() {
     read -p "What's the magic word? " password
     if [ "$password" == "please" ]; then
         if [ -z "$1" ]; then
@@ -48,11 +48,11 @@ grit.force() {
     fi
 }
 
-grit.update() {
+function grit.update() {
     git pull origin main --no-edit
 }
 
-grit.refresh() {
+function grit.refresh() {
     if [ -z "$1" ]; then
         git pull origin develop --no-edit
     else
@@ -66,7 +66,7 @@ grit.refresh() {
     fi
 }
 
-grit.bronch() {
+function grit.bronch() {
     if [ -z "$2" ]; then
         git checkout origin/develop -b $1
     else
@@ -74,7 +74,7 @@ grit.bronch() {
     fi
 }
 
-grit.dif() {
+function grit.dif() {
     if [ -z "$1" ]; then
         git diff -w --ignore-blank-lines --color-words='\w+|.'
     else
@@ -82,7 +82,7 @@ grit.dif() {
     fi
 }
 
-grit.diff() {
+function grit.diff() {
     if [ -z "$1" ]; then
         git diff -w --ignore-blank-lines
     else
@@ -90,14 +90,14 @@ grit.diff() {
     fi
 }
 
-grit.init() {
+function grit.init() {
     git init
     if [ -n "$1" ]; then
         git remote add origin "$1"
     fi
 }
 
-grit.commit() {
+function grit.commit() {
     if [ -z "$1" ]; then
         git commit
     else
@@ -105,7 +105,7 @@ grit.commit() {
     fi
 }
 
-grit.cad() {
+function grit.cad() {
     git add $1
     if [ -z "$2" ]; then
         git commit
@@ -115,7 +115,7 @@ grit.cad() {
     fi
 }
 
-grit.cal() {
+function grit.cal() {
     git add "$(history | grep "dif" | tail -1 | head -1 | awk '{print $4}')"
     if [ -z "$1" ]; then
         git commit
@@ -124,15 +124,15 @@ grit.cal() {
     fi
 }
 
-grit.uncommit() {
+function grit.uncommit() {
     git reset --soft HEAD^
 }
 
-grit.amend() {
+function grit.amend() {
     git commit --amend --no-edit
 }
 
-grit.sad() {
+function grit.sad() {
     git remote add -f $1 $2
 
     if [ -z "$3" ]; then
@@ -144,7 +144,7 @@ grit.sad() {
     fi
 }
 
-grit.sup() {
+function grit.sup() {
     git fetch $1
 
     if [ -z "$2" ]; then
@@ -156,7 +156,7 @@ grit.sup() {
     fi
 }
 
-grit.help() {
+function grit.help() {
     if [ "$(type -t grit.$1)" == "function" ]; then
         declare -f "grit.$1" | sed '1,2d;$d' | sed -e "s/^    //"
     else
@@ -185,7 +185,7 @@ grit.help() {
     fi
 }
 
-grit.status() {
+function grit.status() {
     if git branch ; then
         if [[ $(git diff --stat --cached) ]]; then
             echo -e "${Green}Staged files:${Color_Off}"
@@ -204,7 +204,7 @@ grit.status() {
     fi
 }
 
-grit.autocomplete() {
+function grit.autocomplete() {
     sudo bash -c "ln -sf $DIR/autocomplete /etc/bash_completion.d/grit"
 }
 
