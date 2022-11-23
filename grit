@@ -97,6 +97,10 @@ function grit.init() {
     fi
 }
 
+function grit.safe() {
+    git config --global --add safe.directory $PWD
+}
+
 function grit.commit() {
     if [ -z "$1" ]; then
         git commit
@@ -173,6 +177,7 @@ function grit.help() {
         echo "grit dif                        show diff of words, ignoring whitespace changes"
         echo "grit diff                       show diff, ignoring whitespace changes"
         echo "grit init [ORIGIN]              initialize a new repo (with origin if provided)"
+        echo "grit safe                       run 'git config --global --add safe.directory \$PWD'"
         echo "grit commit [MESSAGE]           commit staged files with message (opens editor if blank)"
         echo "grit cad PATH [MESSAGE]         add path and commit with message (opens editor if blank)"
         echo "grit cal [MESSAGE]              add last diff'd file commit with message (opens editor if blank)"

@@ -36,6 +36,7 @@ grit bronch main new-feature
 | `grit dif` | show diff of words, ignoring whitespace changes |
 | `grit diff` | show diff, ignoring whitespace changes |
 | `grit init [ORIGIN]` | initialize a new repo (with origin if provided) |
+| `grit safe` | run 'git config --global --add safe.directory $PWD' |
 | `grit commit [MESSAGE]` | commit staged files with message (opens editor if blank) |
 | `grit cad PATH [MESSAGE]` | add path and commit with message (opens editor if blank) |
 | `grit cal [MESSAGE]` | add last diff'd file commit with message (opens editor if blank) |
