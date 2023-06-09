@@ -109,10 +109,6 @@ function grit.commit() {
     fi
 }
 
-function grit.lad() {
-    git add "$(history | grep "dif" | tail -1 | head -1 | awk '{print $4}')"
-}
-
 function grit.cad() {
     git add $1
     if [ -z "$2" ]; then
@@ -121,6 +117,10 @@ function grit.cad() {
         # foo
         git commit -m "$2"  # bar
     fi
+}
+
+function grit.lad() {
+    git add "$(history | grep "dif" | tail -1 | head -1 | awk '{print $4}')"
 }
 
 function grit.cal() {
