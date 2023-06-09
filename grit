@@ -109,6 +109,10 @@ function grit.commit() {
     fi
 }
 
+function grit.lad() {
+    git add "$(history | grep "dif" | tail -1 | head -1 | awk '{print $4}')"
+}
+
 function grit.cad() {
     git add $1
     if [ -z "$2" ]; then
@@ -180,6 +184,7 @@ function grit.help() {
         echo "grit safe                       run 'git config --global --add safe.directory \$PWD'"
         echo "grit commit [MESSAGE]           commit staged files with message (opens editor if blank)"
         echo "grit cad PATH [MESSAGE]         add path and commit with message (opens editor if blank)"
+        echo "grit lad                        add last diff'd file"
         echo "grit cal [MESSAGE]              add last diff'd file commit with message (opens editor if blank)"
         echo "grit uncommit                   un-commit the last commit without losing work"
         echo "grit amend                      amend the staged files to the last commit"
