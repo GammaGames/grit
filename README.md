@@ -46,3 +46,4 @@ grit bronch main new-feature
 | `grit sad NAME ORIGIN [BRANCH] [PREFIX]` | add subtree to repo with name, use branch (HEAD if blank) and use subfolder (NAME if blank) |
 | `grit sup NAME [BRANCH] [PREFIX]` | update subtree by name, branch (HEAD if blank), and subfolder (NAME if blank) |
 | `grit suc [command]` | for each submodule run a command |
+| `grit url [URL]` | get the current remote origin url (or set it if provided) |

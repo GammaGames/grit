@@ -164,6 +164,14 @@ function grit.sup() {
     fi
 }
 
+function grit.url() {
+    if [ -z "$1" ]; then
+        git config --get remote.origin.url
+    else
+        git remote set-url origin "$1"
+    fi
+}
+
 function grit.help() {
     if [ "$(type -t grit.$1)" == "function" ]; then
         declare -f "grit.$1" | sed '1,2d;$d' | sed -e "s/^    //"
@@ -191,7 +199,8 @@ function grit.help() {
         echo "grit sad NAME ORIGIN            add subtree to repo with name"
         echo "         [BRANCH] [PREFIX]        use branch (HEAD if blank) and use subfolder (NAME if blank)"
         echo "grit sup NAME [BRANCH] [PREFIX] update subtree by name, branch (HEAD if blank), and subfolder (NAME if blank)"
-        echo "grit suc [command]              for each submodule run a command"
+        echo "grit suc [COMMAND]              for each submodule run a command"
+        echo "grit url [URL]                  get the current remote origin url (or set it if provided)"
     fi
 }
 
