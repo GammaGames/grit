@@ -166,7 +166,7 @@ function grit.sup() {
 
 function grit.url() {
     if [ -z "$1" ]; then
-        git config --get remote.origin.url
+        git remote get-url origin
     else
         git remote set-url origin "$1"
     fi
