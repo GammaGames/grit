@@ -123,6 +123,10 @@ function grit.cad() {
     fi
 }
 
+function grit.lad() {
+    git add "$(history | grep "dif" | tail -1 | head -1 | awk '{print $4}')"
+}
+
 function grit.cal() {
     git add "$(history | grep "dif" | tail -1 | head -1 | awk '{print $4}')"
     if [ -z "$1" ]; then
@@ -164,6 +168,14 @@ function grit.sup() {
     fi
 }
 
+function grit.url() {
+    if [ -z "$1" ]; then
+        git remote get-url origin
+    else
+        git remote set-url origin "$1"
+    fi
+}
+
 function grit.help() {
     if [ "$(type -t grit.$1)" == "function" ]; then
         declare -f "grit.$1" | sed '1,2d;$d' | sed -e "s/^    //"
@@ -185,13 +197,15 @@ function grit.help() {
         echo "grit clone [URL]                clone repo (with submodules!)"
         echo "grit commit [MESSAGE]           commit staged files with message (opens editor if blank)"
         echo "grit cad PATH [MESSAGE]         add path and commit with message (opens editor if blank)"
+        echo "grit lad                        add last diff'd file"
         echo "grit cal [MESSAGE]              add last diff'd file commit with message (opens editor if blank)"
         echo "grit uncommit                   un-commit the last commit without losing work"
         echo "grit amend                      amend the staged files to the last commit"
         echo "grit sad NAME ORIGIN            add subtree to repo with name"
         echo "         [BRANCH] [PREFIX]        use branch (HEAD if blank) and use subfolder (NAME if blank)"
         echo "grit sup NAME [BRANCH] [PREFIX] update subtree by name, branch (HEAD if blank), and subfolder (NAME if blank)"
-        echo "grit suc [command]              for each submodule run a command"
+        echo "grit suc [COMMAND]              for each submodule run a command"
+        echo "grit url [URL]                  get the current remote origin url (or set it if provided)"
     fi
 }
 
