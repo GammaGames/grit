@@ -218,6 +218,9 @@ function grit.status() {
             echo -e "${Blue}Untracked files:${Color_Off}"
             git ls-files --others --exclude-standard | sed  's/^/ /'
         fi
+        if [[ $(git stash list) ]]; then
+            echo -e "${Purple}Stashed changes:${Color_Off} $(git rev-list --walk-reflogs --count refs/stash)"
+        fi
     else
         false
     fi
