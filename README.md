@@ -47,3 +47,4 @@ grit bronch main new-feature
 | `grit sup NAME [BRANCH] [PREFIX]` | update subtree by name, branch (HEAD if blank), and subfolder (NAME if blank) |
 | `grit suc [command]` | for each submodule run a command |
 | `grit url [URL]` | get the current remote origin url (or set it if provided) |
+| `grit me` | print the global and local git user settings |

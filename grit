@@ -101,6 +101,13 @@ function grit.safe() {
     git config --global --add safe.directory $PWD
 }
 
+function grit.me() {
+    echo -e "${Purple}Global:${Color_Off}"
+    git config --list --global | grep --color=never user
+    echo -e "${Cyan}Local:${Color_Off}"
+    git config --list --local | grep --color=never user
+}
+
 function grit.commit() {
     if [ -z "$1" ]; then
         git commit
@@ -201,6 +208,7 @@ function grit.help() {
         echo "grit sup NAME [BRANCH] [PREFIX] update subtree by name, branch (HEAD if blank), and subfolder (NAME if blank)"
         echo "grit suc [COMMAND]              for each submodule run a command"
         echo "grit url [URL]                  get the current remote origin url (or set it if provided)"
+        echo "grit me                         print the global and local git user settings"
     fi
 }
 
