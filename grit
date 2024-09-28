@@ -114,12 +114,12 @@ grit.commit() {
 }
 
 function grit.cad() {
-    git add $1
     if [ -z "$2" ]; then
-        git commit
+        git add .
+        git commit -m "$1"
     else
-        # foo
-        git commit -m "$2"  # bar
+        git add $1
+        git commit -m "$2"
     fi
 }
 
@@ -138,6 +138,14 @@ function grit.cal() {
 
 function grit.uncommit() {
     git reset --soft HEAD^
+}
+
+function grit.recommit() {
+    last_commit_message=$(git log -1 --pretty=%B)
+    git reset --soft HEAD^
+    git reset .
+    git add $1
+    git commit -m "$last_commit_message"
 }
 
 function grit.amend() {
@@ -196,10 +204,11 @@ function grit.help() {
         echo "grit init [ORIGIN]              initialize a new repo (with origin if provided)"
         echo "grit clone [URL]                clone repo (with submodules!)"
         echo "grit commit [MESSAGE]           commit staged files with message (opens editor if blank)"
-        echo "grit cad PATH [MESSAGE]         add path and commit with message (opens editor if blank)"
+        echo "grit cad [PATH] [MESSAGE]       add path ('.' by default) and commit with message (opens editor if blank)"
         echo "grit lad                        add last diff'd file"
         echo "grit cal [MESSAGE]              add last diff'd file commit with message (opens editor if blank)"
         echo "grit uncommit                   un-commit the last commit without losing work"
+        echo "grit recommit                   un-commit the last commit and re-commit with the same message"
         echo "grit amend                      amend the staged files to the last commit"
         echo "grit sad NAME ORIGIN            add subtree to repo with name"
         echo "         [BRANCH] [PREFIX]        use branch (HEAD if blank) and use subfolder (NAME if blank)"

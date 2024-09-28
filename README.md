@@ -12,8 +12,15 @@ alias grit='. ~/Documents/grit/grit'
 Using grit you can create and push the first commit with the following:
 ```sh
 grit init https://github.com/username/repo.git
-grit cad . "Initial commit"
+grit cad "Initial commit"
 grit push
+```
+
+Or recommit *only* the `README.md` file:
+```sh
+grit cad "update readme"
+# sh*t
+grit recommit README.md
 ```
 
 Or create a new branch (`new-feature`) based on the origin's `main`:
@@ -39,10 +46,11 @@ grit bronch main new-feature
 | `grit clone [URL]` |  clone repo (with submodules!)" |
 | `grit safe` | run 'git config --global --add safe.directory $PWD' |
 | `grit commit [MESSAGE]` | commit staged files with message (opens editor if blank) |
-| `grit cad PATH [MESSAGE]` | add path and commit with message (opens editor if blank) |
+| `grit cad [PATH] [MESSAGE]` | add path ('.' by default) and commit with message (opens editor if blank) |
 | `grit lad` | add last diff'd file |
 | `grit cal [MESSAGE]` | add last diff'd file commit with message (opens editor if blank) |
 | `grit uncommit` | un-commit the last commit without losing work |
+| `grit recommit` | un-commit the last commit and re-commit with the same message |
 | `grit amend` | amend the staged files to the last commit |
 | `grit sad NAME ORIGIN [BRANCH] [PREFIX]` | add subtree to repo with name, use branch (HEAD if blank) and use subfolder (NAME if blank) |
 | `grit sup NAME [BRANCH] [PREFIX]` | update subtree by name, branch (HEAD if blank), and subfolder (NAME if blank) |
