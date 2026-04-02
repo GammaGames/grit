@@ -93,7 +93,7 @@ function grit.diff() {
 function grit.init() {
     git init
     if [ -n "$1" ]; then
-        git remote add origin "$1"
+        git remote set-url origin "$1"
     fi
 }
 
