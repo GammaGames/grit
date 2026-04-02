@@ -1,15 +1,15 @@
 #!/bin/bash
 
 # Reset
-Color_Off='\033[0m'       # Text Reset
+Color_Off='\033[0m'
 
 # Regular Colors
-Red='\033[0;31m'          # Red
-Green='\033[0;32m'        # Green
-Yellow='\033[0;33m'       # Yellow
-Blue='\033[0;34m'         # Blue
-Purple='\033[0;35m'       # Purple
-Cyan='\033[0;36m'         # Cyan
+Red='\033[0;31m'
+Green='\033[0;32m'
+Yellow='\033[0;33m'
+Blue='\033[0;34m'
+Purple='\033[0;35m'
+Cyan='\033[0;36m'
 
 DIR=$(dirname $(cd "$(dirname "$BASH_SOURCE")"; pwd))/grit
 
@@ -105,7 +105,14 @@ grit.clone() {
     git clone --recurse-submodules -j8 $1
 }
 
-grit.commit() {
+function grit.me() {
+    echo -e "${Purple}Global:${Color_Off}"
+    git config --list --global | grep --color=never user
+    echo -e "${Cyan}Local:${Color_Off}"
+    git config --list --local | grep --color=never user
+}
+
+function grit.commit() {
     if [ -z "$1" ]; then
         git commit
     else
@@ -215,6 +222,7 @@ function grit.help() {
         echo "grit sup NAME [BRANCH] [PREFIX] update subtree by name, branch (HEAD if blank), and subfolder (NAME if blank)"
         echo "grit suc [COMMAND]              for each submodule run a command"
         echo "grit url [URL]                  get the current remote origin url (or set it if provided)"
+        echo "grit me                         print the global and local git user settings"
     fi
 }
 
@@ -231,6 +239,9 @@ function grit.status() {
         if [[ $(git ls-files --others --exclude-standard) ]]; then
             echo -e "${Blue}Untracked files:${Color_Off}"
             git ls-files --others --exclude-standard | sed  's/^/ /'
+        fi
+        if [[ $(git stash list) ]]; then
+            echo -e "${Purple}Stashed changes:${Color_Off} $(git rev-list --walk-reflogs --count refs/stash)"
         fi
     else
         false
